@@ -5,12 +5,15 @@
 ### FR-01 Create Patient
 
 1. Input fields:
+
 - `fullName` (required, non-blank)
 - `birthYear` (required, >= 1900, <= current year)
 - `address` (optional, max 255)
 - `phoneNumber` (optional)
 - `visitDate` (optional) -> defaults to `LocalDate.now()` if omitted.
-2. Generate unique patient code per date with sequence `001..999`. -> Format: `KL{yyMMdd}-{seq}` (e.g. `KL260301-001`).
+
+2. Generate unique patient code using a globally auto-incrementing sequence `001..999`. -> Format:
+   `KL{yyMMdd}-{seq}` (e.g. `KL260301-001`).
 3. Persist patient and return created resource.
 
 ### FR-02 Read Patients
