@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -49,6 +50,16 @@ public class GlobalExceptionHandler {
                         "Validation Failed",
                         "One or more parameters failed validation",
                         fieldErrors));
+    }
+
+    @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleUnsatisfiedParams(
+            UnsatisfiedServletRequestParameterException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.of(
+                        400,
+                        "Bad Request",
+                        "Required request parameters are missing or invalid"));
     }
 
     @ExceptionHandler(Exception.class)
