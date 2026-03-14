@@ -3,6 +3,7 @@ package com.yoot.clinic.medical_service.repository;
 import com.yoot.clinic.common.response.PageResponse;
 import com.yoot.clinic.medical_service.dto.MedicalServiceResponse;
 import com.yoot.clinic.medical_service.entity.MedicalService;
+import com.yoot.clinic.medical_service.entity.enums.MedicalServiceCategory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -27,7 +28,7 @@ public interface MedicalServiceRepository extends JpaRepository<MedicalService, 
             "SELECT ms " +
             "FROM MedicalService ms " +
             "WHERE ms.isActive = true and ms.category = :category")
-    Page<MedicalService> findAllActiveByCategory(Pageable pageable, String category);
+    Page<MedicalService> findAllActiveByCategory(Pageable pageable, MedicalServiceCategory category);
 
 
     @Query(value = "" +

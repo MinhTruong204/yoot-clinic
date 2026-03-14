@@ -52,15 +52,15 @@ public class GlobalExceptionHandler {
                         fieldErrors));
     }
 
-    @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
-    public ResponseEntity<ErrorResponse> handleUnsatisfiedParams(
-            UnsatisfiedServletRequestParameterException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(ErrorResponse.of(
-                        400,
-                        "Bad Request",
-                        "Required request parameters are missing or invalid"));
-    }
+//    @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
+//    public ResponseEntity<ErrorResponse> handleUnsatisfiedParams(
+//            UnsatisfiedServletRequestParameterException ex) {
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+//                .body(ErrorResponse.of(
+//                        400,
+//                        "Bad Request",
+//                        "Required request parameters are missing or invalid"));
+//    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex) {

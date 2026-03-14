@@ -4,6 +4,7 @@ import com.yoot.clinic.common.exception.ResourceNotFoundException;
 import com.yoot.clinic.common.response.PageResponse;
 import com.yoot.clinic.medical_service.dto.MedicalServiceResponse;
 import com.yoot.clinic.medical_service.entity.MedicalService;
+import com.yoot.clinic.medical_service.entity.enums.MedicalServiceCategory;
 import com.yoot.clinic.medical_service.mapper.MedicalServiceMapper;
 import com.yoot.clinic.medical_service.repository.MedicalServiceRepository;
 import lombok.RequiredArgsConstructor;
@@ -41,10 +42,24 @@ public class MedicalServiceUseCaseImpl implements MedicalServiceUseCase {
 
     @Override
     public PageResponse<MedicalServiceResponse> findAllActiveByCategory(String category) {
+
+        MedicalServiceCategory parsedCategory = this.isValidCategory(category);
+
         return PageResponse.from(
                 medicalServiceRepository.findAllActiveByCategory(
-                                Pageable.unpaged(Sort.by("code").ascending()), category
+                                Pageable.unpaged(Sort.by("code").ascending()), parsedCategory
                         )
                         .map(medicalServiceMapper::toResponse));
     }
+
+
+
+    public MedicalServiceCategory isValidCategory(String value) {
+        try {
+            return MedicalServiceCategory.valueOf(value);
+        } catch (IllegalArgumentException | NullPointerException e) {
+            throw new ResourceNotFoundException("Medical service category not found", value);
+        }
+    }
+
 }
