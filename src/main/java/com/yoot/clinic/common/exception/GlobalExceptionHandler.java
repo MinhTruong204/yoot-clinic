@@ -60,4 +60,12 @@ public class GlobalExceptionHandler {
                         "Internal Server Error",
                         "An unexpected error occurred"));
     }
+
+    @ExceptionHandler(InvalidRequestException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidRequest(InvalidRequestException ex) {
+        return ResponseEntity.badRequest().body(ErrorResponse.of(
+                400,
+                "ERR-MED-002",
+                ex.getMessage()));
+    }
 }
